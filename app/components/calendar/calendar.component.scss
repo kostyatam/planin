@@ -1,0 +1,154 @@
+.calendar {
+  width: 100%;
+
+  &__days-names {
+    margin-bottom: 12px;
+  }
+
+  &__calendar {
+    margin-bottom: 0;
+  }
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+.days-names {
+  flex-flow: row nowrap;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #50E3C2;
+
+  &__item {
+    font-size: 14px;
+    text-align: center;
+    flex: 1 1 14.2857143%;
+    text-transform: uppercase;
+    padding: 10px;
+  }
+}
+
+.navigation {
+  flex-flow: row nowrap;
+  display: flex;
+  margin-bottom: 28px;
+
+  &__item {
+    flex: 1 1 auto;
+    font-size: 18px;
+    line-height: 1;
+    color: #e5e5e5;
+
+    &_prev {
+      text-align: left;
+    }
+
+    &_next {
+      text-align: right
+    }
+
+    &_header {
+      color: #50e3c2;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+    display: inline-block;
+
+    &_info {
+      text-align:center
+    }
+  }
+}
+
+.week {
+  width: 100%;
+  flex-flow: row nowrap;
+  display: flex;
+  align-items: stretch;
+  overflow-y: hidden;
+
+  &:last-child {
+    border-bottom: 1px solid #ededed;
+  }
+
+  &:before {
+    content: '';
+    padding-top: 14.2857143%;
+  }
+}
+
+.day {
+  position: relative;
+  flex: 1 1 14.2857143%;
+  border: 1px solid #ededed;
+  padding: 10px;
+  border-right: none;
+  border-bottom: none;
+  min-width: 0;
+  color: #4A4A4A;
+  cursor: pointer;
+
+  &_disabled {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(#ededed, .3);
+    }
+  }
+
+  &:last-child {
+    border-right: 1px solid #ededed;
+  }
+
+  &__row {
+    width: 100%;
+
+    &_header {
+      text-align: center;
+      margin-bottom: 5px;
+    }
+  }
+
+  &__number {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1;
+    padding: 5px 15px;
+
+    &_active {
+      color: #fff;
+      background-color: #50e3c2;
+      border-radius: 8px;
+    }
+  }
+
+  &__task {
+    font-size: 12px;
+    padding-left: 25px;
+    position: relative;
+    line-height: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #FF5E3A;
+    }
+  }
+}

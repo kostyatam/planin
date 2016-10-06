@@ -1,0 +1,58 @@
+.title {
+    display: inline-block;
+    line-height: 1;
+    color: #4a4a4a;
+    font-size: 14px;
+    padding: 5px 10px;
+
+    &_selected {
+        border-bottom: 1px solid #50E3C2;
+        color: #50E3C2;
+    }
+
+    &_today {
+        color: #fff;
+        background-color: #50E3C2;
+        border-radius: 8px;
+        border-bottom: 0;
+    }
+}
+
+.task {
+    font-size: 14px;
+    color: #4a4a4a;
+    position: relative;
+    padding-left: 15px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 0;
+        border-radius: 50%;
+        display: block;
+        width: 7px;
+        height: 7px;
+        background-color: #FF5E3A;
+    }
+}
+
+.day {
+    padding: 10px;
+}
+
+.row {
+    margin-bottom: 5px;
+
+    &_center {
+        text-align: center;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
