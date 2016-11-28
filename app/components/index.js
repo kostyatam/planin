@@ -1,10 +1,6 @@
 'use strict';
+import {Month} from './month/month';
+import {Navigator} from './navigator/navigator';
+import {Task} from './task/task';
 
-import {Calendar} from './calendar/calendar.component';
-import {Header} from './header/header.component';
-
-import {CreateTask} from './task/create-task.component.js';
-
-import {Day} from './day/day';
-
-export {Header, Calendar, CreateTask, Day};
+export {Navigator, Month, Task};

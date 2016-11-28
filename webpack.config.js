@@ -4,10 +4,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: './main.js',
+    entry: './app/app.js',
     output: {
         path: 'guide',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     devtool: 'source-map',
     plugins: [
@@ -35,12 +36,14 @@ module.exports = {
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass')
         }, {
-            test: /\.svg$/,
-            loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+            test: /\.svg$|\.png$/,
+            loader: "file-loader?hash=sha512&digest=hex&name=[hash].[ext]"
         }]
     },
     postcss: [
         require('autoprefixer-core'),
+        require('postcss-mixins'),
+        require('postcss-simple-vars'),
         require('postcss-nested')
     ]
 }

@@ -1,0 +1,81 @@
+.month {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  border-top: 1px solid #EDEDED;
+  border-left: 1px solid #EDEDED;
+}
+
+.navigate {
+    border-bottom: 1px solid #50E3C2;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    margin-bottom: 12px;
+
+    &__item {
+        flex: 1;
+        text-align: center;
+        font-size: 14px;
+        color: #4a4a4a;
+        text-transform: uppercase;
+        padding: 10px 0;
+    }
+}
+
+.week {
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  position: relative;
+}
+
+.day {
+  position: relative;
+  flex: 1;
+  position: relative;
+  width: 14.2857142857%;
+  height: 14.2857142857%;
+  padding-top: 14.2857142857%;
+  z-index: 1;
+  border-right: 1px solid #EDEDED;
+  border-bottom: 1px solid #EDEDED;
+
+  &__container {
+      position: absolute;
+      top: 0px;
+      bottom: 10px;
+      left: 5px;
+      right: 5px;
+      overflow: hidden;
+   }
+
+  &_selected {
+     border-color: #50E3C2;
+     border-width: 3px;
+     z-index: 2;
+     margin-left: -2px;
+     margin-top: -2px;
+
+  &:before, &:after {
+               content: '';
+               position: absolute;
+               background-color: #50E3C2;
+               top: 0px;
+               left: 0px;
+             }
+
+  &:before {
+     width: 3px;
+     height: 100%;
+     padding: 1px 0;
+   }
+
+  &:after {
+     width: 100%;
+     height: 3px;
+     padding: 0 1px;
+   }
+  }
+}

@@ -1,0 +1,67 @@
+.task {
+    border: 1px solid #d2d2d2;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all .5s ease-in;
+    display: flex;
+    flex-flow: column nowrap;
+
+    &_new {
+        border: none;
+        border-bottom: 1px solid #c6c6c6;
+        border-radius: 0;
+
+        .header {
+            background: #fff;
+        }
+
+        .body {
+            max-height: 0;
+            z-index: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            transform: translateY(-100%);
+        }
+    }
+}
+
+.header {
+    background-color: #f3f3f3;
+    padding: 10px 15px;
+    display: flex;
+    flex-flow: row nowrap;
+    z-index: 1;
+    position: relative;
+    transition: all .5s ease-in;
+}
+
+.title {
+    font-size: 12px;
+    color: #4a4a4a;
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #d2d2d2;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.body {
+    width: 100%;
+    padding: 10px 30px;
+    border: none;
+    resize: none;
+    outline: none;
+    position: relative;
+    max-height: 1000px;
+    transition: all .5s ease-in;
+}

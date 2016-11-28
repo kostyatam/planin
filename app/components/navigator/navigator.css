@@ -1,0 +1,36 @@
+.navigator {
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.back {
+    flex: 0;
+    color: #e5e5e5;
+    font-size: 18px;
+    background: url(./images/arrow-left.png) 0 20px no-repeat no-repeat;
+    background-size: 20px 20px;
+    padding-left: 30px;
+    cursor: pointer;
+    padding-top: 20px;
+}
+.forward {
+    flex: 0;
+    color: #e5e5e5;
+    font-size: 18px;
+    background: url(./images/arrow-right.png) 100% 20px no-repeat no-repeat;
+    background-size: 20px 20px;
+    padding-right: 30px;
+    text-align: right;
+    cursor: pointer;
+    padding-top: 20px;
+}
+
+.title {
+    flex: 0;
+    color: #50e3c2;
+    font-size: 20px;
+}
+

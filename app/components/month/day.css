@@ -31,7 +31,7 @@
     &:after {
         content: '';
         position: absolute;
-        top: 4px;
+        top: 7px;
         left: 0;
         border-radius: 50%;
         display: block;
@@ -42,7 +42,27 @@
 }
 
 .day {
-    padding: 10px;
+    z-index: 1;
+    padding: 5px 10px 10px;
+}
+
+.disabled {
+    .title {
+        color: #EDEDED;
+
+        &_today {
+            background-color: #EDEDED;
+            color: #fff;
+        }
+    }
+
+    .task {
+        color: #EDEDED;
+
+        &:after {
+            background-color: #EDEDED;
+        }
+    }
 }
 
 .row {
