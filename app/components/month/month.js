@@ -8,7 +8,7 @@ import style from './month.css';
 
 let days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-export const Month = ({weeks}) => (
+export const Month = ({ weeks, onChooseDay = e => e }) => (
     <div>
         <div className={style.navigate}>
             {days.map(name => {
@@ -18,18 +18,18 @@ export const Month = ({weeks}) => (
             })}
         </div>
         <div className={style.month}>
-            {weeks.map((week, index) => <Week key={index} week={week}></Week>)}
+            {weeks.map((week, index) => <Week key={index} week={week} onChooseDay={onChooseDay}></Week>)}
         </div>
     </div>
 );
 
-const Week = ({week}) => (
+const Week = ({week, onChooseDay = e => e}) => (
     <div className={style.week}>
         {week.map((day, index) =>
             <div key={index} className={classNames(style.day, {
                 [style.day_selected]: day.selected
             })}>
-                <div className={style.day__container}>
+                <div className={style.day__container} onClick={onChooseDay.bind(day)}>
                     <Day data={day}></Day>
                 </div>
             </div>

@@ -3,37 +3,30 @@
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    transition: all .5s ease-in;
+    transition: all .2s ease-in;
     display: flex;
     flex-flow: column nowrap;
 
     &_new {
-        border: none;
-        border-bottom: 1px solid #c6c6c6;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: #c6c6c6;
         border-radius: 0;
 
-        .header {
-            background: #fff;
-        }
-
         .body {
-            max-height: 0;
-            z-index: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-            transform: translateY(-100%);
+            margin-top: -100%;
         }
     }
 }
 
 .header {
-    background-color: #f3f3f3;
     padding: 10px 15px;
     display: flex;
     flex-flow: row nowrap;
     z-index: 1;
     position: relative;
-    transition: all .5s ease-in;
+    transition: all .2s ease-in;
 }
 
 .title {
@@ -54,14 +47,17 @@
     position: relative;
     top: 2px;
 }
-
+.wrapper {
+    overflow: hidden;
+}
 .body {
+    display: block;
     width: 100%;
     padding: 10px 30px;
     border: none;
     resize: none;
     outline: none;
     position: relative;
-    max-height: 1000px;
+    margin-top: 0;
     transition: all .5s ease-in;
 }

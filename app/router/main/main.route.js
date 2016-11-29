@@ -2,18 +2,21 @@
 
 import React, {Component} from 'react';
 import {Month, Navigator, Task} from 'components';
+import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {ms} from 'utils';
+import {ms, classNames} from 'utils';
+import * as actions from '../../actions.js';
+import styles from './main.route.css';
 
-function select (state, props) {
-    const {tasks} = state;
+function select(state, props) {
+    const {tasks, active, day} = state;
     const {params} = props;
     const {month, year} = ms.parseDate(params.date || Date.now());
+    const weeks = ms.getMonthCalendar(tasks, month, year, active);
 
     return {
-        day: {date: ms.getTime(year, month, 5), tasks: []},
-        weeks: ms.getMonthCalendar(tasks, month, year)
-            .map(task => (task.date !== ms.getTime(year, month, 5) ? task : Object.assign({}, task, {selected: true}))),
+        day,
+        weeks,
         navigator: {
             back: ms._monthNumber[month - 1 > 0 ? month - 1 : 12 + (month - 1)],
             forward: ms._monthNumber[month + 1 < 12 ? month + 1 : (month + 1) - 12],
@@ -22,13 +25,51 @@ function select (state, props) {
     }
 }
 
-const Main = ({navigator, weeks, day}) => (
-    <div>
-        <Tasks day={day}></Tasks>
-        <Navigator {...navigator}></Navigator>
-        <Month weeks={weeks}></Month>
-    </div>
-);
+function dispatch(dispatch) {
+    return {
+        actions: bindActionCreators(actions, dispatch)
+    }
+}
+
+class Main extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            newTask: {
+                title: '',
+                text: ''
+            }
+        };
+
+        this.onNewTaskChange = this.onNewTaskChange.bind(this);
+    }
+
+    onNewTaskChange (newTask) {
+        this.setState({newTask});
+        console.log(newTask.title, newTask.text);
+    }
+
+    render () {
+        let {day, navigator, weeks, actions} = this.props;
+        let {newTask} = this.state;
+        let {chooseDay} = actions;
+
+        return (
+            <div className={styles.page}>
+                <div className={classNames(styles.sidebar, {
+                    [styles.sidebar_show]: day
+                })}>
+                    <Task isNew={!newTask.title && !newTask.text} task={newTask} onTaskChange={this.onNewTaskChange}></Task>
+                </div>
+                <div className={styles.main}>
+                    <Navigator {...navigator}></Navigator>
+                    <Month weeks={weeks} onChooseDay={chooseDay}></Month>
+                </div>
+            </div>
+        )
+    }
+}
+;
 
 
-export default connect(select)(Main);
+export default connect(select, dispatch)(Main);

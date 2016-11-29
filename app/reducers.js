@@ -3,7 +3,8 @@ import {guid} from 'utils';
 import {TYPES} from './actions';
 
 let initialState = {
-    tasks: []
+    tasks: [],
+    day: null
 };
 
 export default (state = initialState, action = {}) => {
@@ -25,7 +26,13 @@ export default (state = initialState, action = {}) => {
            for (let i = 0, {length} = tasks; i < length; i++) {
                if (tasks[i].id !== task.id) continue;
                tasks[i] = task;
-               return;
+               return state;
+           }
+       case TYPES.CHOOSE_DAY:
+           let {day} = action;
+           return {
+               ...state,
+               day
            }
        default:
            return state;

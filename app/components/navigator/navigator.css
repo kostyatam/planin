@@ -32,5 +32,6 @@
     flex: 0;
     color: #50e3c2;
     font-size: 20px;
+    text-transform: capitalize;
 }
 

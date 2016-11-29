@@ -34,6 +34,7 @@
     "lorem-ipsum": "^1.0.3",
     "mocha": "^3.1.2",
     "node-sass": "^3.8.0",
+    "postcss-color-function": "^2.0.1",
     "postcss-loader": "^0.9.1",
     "postcss-mixins": "^5.4.0",
     "postcss-nested": "^1.0.0",
