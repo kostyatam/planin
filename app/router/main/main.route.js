@@ -12,7 +12,7 @@ function select(state, props) {
     const {tasks, active, day} = state;
     const {params} = props;
     const {month, year} = ms.parseDate(params.date || Date.now());
-    const weeks = ms.getMonthCalendar(tasks, month, year, active);
+    const weeks = ms.getWeeks(ms.getMonthCalendar(tasks, month, year, active));
 
     return {
         day,
@@ -42,11 +42,20 @@ class Main extends Component {
         };
 
         this.onNewTaskChange = this.onNewTaskChange.bind(this);
+        this.createNewTask = this.createNewTask.bind(this);
     }
-
+    createNewTask (task) {
+        let {actions} = this.props;
+        this.setState({
+            newTask: {
+                title: '',
+                text: ''
+            }
+        });
+        actions.addTask(task);
+    }
     onNewTaskChange (newTask) {
         this.setState({newTask});
-        console.log(newTask.title, newTask.text);
     }
 
     render () {
@@ -59,7 +68,10 @@ class Main extends Component {
                 <div className={classNames(styles.sidebar, {
                     [styles.sidebar_show]: day
                 })}>
-                    <Task isNew={!newTask.title && !newTask.text} task={newTask} onTaskChange={this.onNewTaskChange}></Task>
+                    <h2>{day && day.date}</h2>
+                    <Task isNew={!newTask.title && !newTask.text}
+                          task={newTask}
+                          onTaskChange={this.onNewTaskChange} onComplete={this.createNewTask}></Task>
                 </div>
                 <div className={styles.main}>
                     <Navigator {...navigator}></Navigator>

@@ -9,6 +9,9 @@ export class Task extends Component {
         super(props);
         this.onTitleChange = this.onTitleChange.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
+        this.onComplete = this.onComplete.bind(this);
+        this.onKeyTitle = this.onKeyTitle.bind(this);
+        this.onKeyText = this.onKeyText.bind(this);
     }
     _onTaskChange ({title, text}) {
         let {onTaskChange} = this.props;
@@ -22,6 +25,26 @@ export class Task extends Component {
         let text = target.value;
         this._onTaskChange({title: this.props.task.title, text});
     }
+    onComplete () {
+        let {task, onComplete} = this.props;
+        onComplete && onComplete(task);
+    }
+    onKeyTitle (e) {
+        let {onKeyTitle} = this.props;
+        if (e.keyCode === 13) {
+            this.refs.title.blur();
+            this.refs.text.focus();
+        }
+        onKeyTitle && onKeyTitle(e);
+    }
+    onKeyText (e) {
+        let {onKeyText} = this.props;
+        if (e.metaKey && e.keyCode === 13) {
+            this.onComplete();
+            return;
+        }
+        onKeyText && onKeyText(e);
+    }
     render () {
         let {task = {title: '', text: ''}, isNew = false} = this.props;
         return (
@@ -32,17 +55,21 @@ export class Task extends Component {
                     <div className={style.header}>
                         <div className={style.circle}></div>
                         <input
+                            ref="title"
                             className={style.title}
                             type="text"
                             value={task.title}
-                            onChange={this.onTitleChange}/>
+                            onChange={this.onTitleChange}
+                            onKeyUp={this.onKeyTitle}/>
                     </div>
                 </div>
                 <div className={style.wrapper}>
                     <textarea
+                        ref="text"
                         className={style.body}
                         value={task.text}
-                        onChange={this.onTextChange}>
+                        onChange={this.onTextChange}
+                        onKeyDown={this.onKeyText}>
                     </textarea>
                 </div>
             </div>

@@ -24,6 +24,24 @@ export default new class MultiService {
             year: date.getFullYear()
         }
     }
+    insertTask (tasks, task) {
+        let {assignDate} = task;
+        let indexBefore = this.binarySearch(tasks, task => task.assignDate < assignDate);
+        return tasks.slice(0, indexBefore + 1).concat(task, ...tasks.slice(indexBefore + 2));
+    }
+
+    insertTaskToWeeks (weeks, task) {
+        return weeks.map(week => {
+            if (week[0].assignDate < task.assignDate || week[6].assignDate > task.assignDate) return week;
+            return week.map(day => {
+                if (day.assignDate !== task.assignDate) return day;
+                return {
+                    ...day,
+                    tasks: this.insertTask(day.tasks, task)
+                }
+            })
+        });
+    }
     getMonthCalendar (tasks, month, year) {
         let {start, end} = this.getMonthBorders(month, year);
         let monthTasks = this.getTasksByDate (tasks, start, end);
@@ -75,9 +93,13 @@ export default new class MultiService {
             }
         }
 
+        return calendar;
+    }
+
+    getWeeks (calendar) {
         return this.range(Math.ceil(calendar.length / 7)).map((item, index) => {
             return calendar.slice(index * 7, index * 7 +7)
-        });
+        })
     }
 
     range (n) {
@@ -126,7 +148,7 @@ export default new class MultiService {
                 end = mid;
             }
         }
-        return compare(arr[end]) ? end : -1;
+        return !compare || compare(arr[end]) ? end : -1;
     }
 
     constructor () {
