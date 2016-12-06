@@ -1,4 +1,5 @@
 'use strict';
+import {guid, ms} from 'utils';
 
 export const TYPES = {
     GET_TASKS: 'get_tasks',
@@ -21,6 +22,8 @@ export function getTasks () {
 }
 
 export function addTask (task) {
+    task.id = guid();
+    task.createDate = ms.getTime();
     return {
         type: TYPES.ADD_TASK,
         task

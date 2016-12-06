@@ -1,6 +1,6 @@
 'use strict';
-import {guid} from 'utils';
 import {TYPES} from './actions';
+import {ms} from 'utils';
 
 let initialState = {
     tasks: [],
@@ -12,12 +12,8 @@ export default (state = initialState, action = {}) => {
     let {task} = action;
    switch (action.type) {
        case TYPES.ADD_TASK:
-           let createTime = (new Date).getTime();
-           tasks.push({
-               id: guid(),
-               task,
-               createTime
-           });
+           tasks = ms.insertTask(tasks, task);
+           console.log(tasks);
            return {
                ...state,
                tasks
@@ -30,6 +26,7 @@ export default (state = initialState, action = {}) => {
            }
        case TYPES.CHOOSE_DAY:
            let {day} = action;
+           console.log(day.date);
            return {
                ...state,
                day

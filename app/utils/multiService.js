@@ -27,7 +27,7 @@ export default new class MultiService {
     insertTask (tasks, task) {
         let {assignDate} = task;
         let indexBefore = this.binarySearch(tasks, task => task.assignDate < assignDate);
-        return tasks.slice(0, indexBefore + 1).concat(task, ...tasks.slice(indexBefore + 2));
+        return tasks.slice(0, indexBefore + 1).concat(task, ...tasks.slice(indexBefore + 1));
     }
 
     insertTaskToWeeks (weeks, task) {
@@ -45,9 +45,11 @@ export default new class MultiService {
     getMonthCalendar (tasks, month, year) {
         let {start, end} = this.getMonthBorders(month, year);
         let monthTasks = this.getTasksByDate (tasks, start, end);
+        console.log('monthTasks', monthTasks);
         let calendar = [];
         for (let i = 0, count = (end - start)/TIME_IN_MS.DAY;i < count;i++) {
-            let tasks = this.getTasksByDate (monthTasks, start, start + TIME_IN_MS.DAY);
+            let tasks = this.getTasksByDate (monthTasks, start + i * TIME_IN_MS.DAY, start + (i + 1) * TIME_IN_MS.DAY);
+            if (tasks.length) console.log('boom')
             calendar[i] = {
                 number: i+1,
                 disabled: false,
@@ -136,12 +138,15 @@ export default new class MultiService {
 
     binarySearch (arr, toRight, compare) {
         let first = 0,
-            end = arr.length,
+            end = arr.length - 1,
             mid;
+
+        if (!arr.length) {
+            return -1;
+        }
 
         for (;first < end;) {
             mid = Math.floor(first + (end - first) / 2);
-            //console.log(arr[first], arr[end]);
             if (toRight(arr[mid])) {
                 first = mid + 1;
             } else {

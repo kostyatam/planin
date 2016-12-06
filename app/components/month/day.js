@@ -25,7 +25,7 @@ Day.propTypes = {
         disabled: React.PropTypes.boolean,
         selected: React.PropTypes.boolean,
         tasks: React.PropTypes.arrayOf(React.PropTypes.shape({
-            id: React.PropTypes.number,
+            id: React.PropTypes.string,
             title: React.PropTypes.title,
         })),
     }).isRequired

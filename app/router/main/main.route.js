@@ -45,13 +45,14 @@ class Main extends Component {
         this.createNewTask = this.createNewTask.bind(this);
     }
     createNewTask (task) {
-        let {actions} = this.props;
+        let {actions, day} = this.props;
         this.setState({
             newTask: {
                 title: '',
                 text: ''
             }
         });
+        task.assignDate = day.date;
         actions.addTask(task);
     }
     onNewTaskChange (newTask) {

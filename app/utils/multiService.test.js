@@ -21,6 +21,14 @@ describe('MultiService', function() {
             );
             assert.equal(index, 2);
         });
+        it('should return -1', function () {
+            let index = ms.binarySearch(
+                [],
+                    item => item.a < 3,
+                    item => item.a >= 3 && item.a < 5
+            );
+            assert.equal(index, -1);
+        });
     });
     describe('#getTasksByDate()', function() {
         it('should return empty array when ', function() {

@@ -29,7 +29,7 @@ const Week = ({week, onChooseDay = e => e}) => (
             <div key={index} className={classNames(style.day, {
                 [style.day_selected]: day.selected
             })}>
-                <div className={style.day__container} onClick={onChooseDay.bind(day)}>
+                <div className={style.day__container} onClick={onChooseDay.bind(null, day)}>
                     <Day data={day}></Day>
                 </div>
             </div>
