@@ -21,6 +21,13 @@ describe('MultiService', function() {
             );
             assert.equal(index, 2);
         });
+        it('should return 6', function () {
+            let index = ms.binarySearch(
+                [{a:2}, {a:2}, {a:3}, {a:3}, {a:3}, {a:4}, {a:6}],
+                    item => item.a < 5
+            );
+            assert.equal(index, 6);
+        });
         it('should return -1', function () {
             let index = ms.binarySearch(
                 [],
