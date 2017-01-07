@@ -13,7 +13,6 @@ export default (state = initialState, action = {}) => {
    switch (action.type) {
        case TYPES.ADD_TASK:
            tasks = ms.insertTask(tasks, task);
-           console.log(tasks);
            return {
                ...state,
                tasks
@@ -26,7 +25,6 @@ export default (state = initialState, action = {}) => {
            }
        case TYPES.CHOOSE_DAY:
            let {day} = action;
-           console.log(day.date);
            return {
                ...state,
                day

@@ -26,8 +26,18 @@ export default new class MultiService {
     }
     insertTask (tasks, task) {
         let {assignDate} = task;
-        let indexBefore = this.binarySearch(tasks, task => task.assignDate < assignDate);
-        return tasks.slice(0, indexBefore + 1).concat(task, ...tasks.slice(indexBefore + 1));
+        let {length} = tasks;
+        if (!length) {
+            return [task]
+        };
+        if (tasks[0].assignDate > assignDate) {
+            return [task].concat(tasks);
+        };
+        if (tasks[tasks.length - 1].assignDate < assignDate) {
+            return tasks.concat(task);
+        };
+        let indexNext = this.binarySearch(tasks, task => task.assignDate < assignDate);
+        return tasks.slice(0, indexNext).concat(task, ...tasks.slice(indexNext));
     }
 
     insertTaskToWeeks (weeks, task) {
@@ -45,11 +55,9 @@ export default new class MultiService {
     getMonthCalendar (tasks, month, year) {
         let {start, end} = this.getMonthBorders(month, year);
         let monthTasks = this.getTasksByDate (tasks, start, end);
-        console.log('monthTasks', monthTasks);
         let calendar = [];
         for (let i = 0, count = (end - start)/TIME_IN_MS.DAY;i < count;i++) {
             let tasks = this.getTasksByDate (monthTasks, start + i * TIME_IN_MS.DAY, start + (i + 1) * TIME_IN_MS.DAY);
-            if (tasks.length) console.log('boom')
             calendar[i] = {
                 number: i+1,
                 disabled: false,
@@ -129,8 +137,8 @@ export default new class MultiService {
         let sliceStart = this.binarySearch(tasks, task => task.assignDate < start, task => task.assignDate >= start && task.assignDate < end);
         let sliceEnd;
         if (sliceStart !== -1) {
-            sliceEnd = this.binarySearch(tasks.slice(sliceStart), task => task.assignDate < end, task => task.assignDate >= start && task.assignDate <= end);
-            return (sliceEnd !== -1) ? tasks.slice(sliceStart, sliceStart + sliceEnd) : tasks.slice(sliceStart);
+            sliceEnd = this.binarySearch(tasks.slice(sliceStart + 1), task => task.assignDate < end, task => task.assignDate >= end);
+            return (sliceEnd !== -1) ? tasks.slice(sliceStart, sliceStart + sliceEnd + 1) : tasks.slice(sliceStart);
         } else {
             return [];
         };
