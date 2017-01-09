@@ -5,23 +5,16 @@ import {Month, Navigator, Task} from 'components';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
 import {ms, classNames} from 'utils';
-import * as actions from '../../actions.js';
+import * as actions from 'actions';
 import styles from './main.route.css';
 
 function select(state, props) {
-    const {tasks, active, day} = state;
-    const {params} = props;
-    const {month, year} = ms.parseDate(params.date || Date.now());
-    const weeks = ms.getWeeks(ms.getMonthCalendar(tasks, month, year, active));
-
+    const {calendar, sidebar} = state;
     return {
-        day,
-        weeks,
-        navigator: {
-            back: ms._monthNumber[month - 1 > 0 ? month - 1 : 12 + (month - 1)],
-            forward: ms._monthNumber[month + 1 < 12 ? month + 1 : (month + 1) - 12],
-            title: `${ms._monthNumber[month]}'${year}`
-        }
+        weeks: calendar.weeks,
+        navigator: calendar.navigator,
+        day: sidebar.day,
+        newTask: sidebar.newTask
     }
 }
 
@@ -34,36 +27,28 @@ function dispatch(dispatch) {
 class Main extends Component {
     constructor (props) {
         super(props);
-        this.state = {
-            newTask: {
-                title: '',
-                text: ''
-            }
-        };
-
+        let {actions, params} = this.props;
+        actions.setDate(params.date);
         this.onNewTaskChange = this.onNewTaskChange.bind(this);
         this.createNewTask = this.createNewTask.bind(this);
+        this.onChooseDay = this.onChooseDay.bind(this);
     }
     createNewTask (task) {
         let {actions, day} = this.props;
-        this.setState({
-            newTask: {
-                title: '',
-                text: ''
-            }
-        });
         task.assignDate = day.date;
         actions.addTask(task);
     }
     onNewTaskChange (newTask) {
-        this.setState({newTask});
+        let {actions} = this.props;
+        actions.newTaskChange(newTask);
     }
-
+    onChooseDay (day) {
+        let {actions} = this.props;
+        actions.chooseDay(day);
+    }
     render () {
-        let {day, navigator, weeks, actions} = this.props;
-        let {newTask} = this.state;
-        let {chooseDay} = actions;
-
+        let {day, navigator, weeks, newTask} = this.props;
+        
         return (
             <div className={styles.page}>
                 <div className={classNames(styles.sidebar, {
@@ -76,7 +61,7 @@ class Main extends Component {
                 </div>
                 <div className={styles.main}>
                     <Navigator {...navigator}></Navigator>
-                    <Month weeks={weeks} onChooseDay={chooseDay}></Month>
+                    <Month weeks={weeks} onChooseDay={this.onChooseDay}></Month>
                 </div>
             </div>
         )

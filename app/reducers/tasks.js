@@ -1,10 +1,8 @@
-'use strict';
-import {TYPES} from './actions';
+import {TYPES} from 'actions';
 import {ms} from 'utils';
 
-let initialState = {
-    tasks: [],
-    day: null
+const initialState = {
+    tasks: []
 };
 
 export default (state = initialState, action = {}) => {
@@ -22,12 +20,6 @@ export default (state = initialState, action = {}) => {
                if (tasks[i].id !== task.id) continue;
                tasks[i] = task;
                return state;
-           }
-       case TYPES.CHOOSE_DAY:
-           let {day} = action;
-           return {
-               ...state,
-               day
            }
        default:
            return state;

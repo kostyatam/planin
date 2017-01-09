@@ -21,6 +21,8 @@ module.exports = {
     resolve: {
         alias: {
             components: path.join(__dirname, 'app/components'),
+            actions: path.join(__dirname, 'app/actions'),
+            reducers: path.join(__dirname, 'app/reducers'),
             utils: path.join(__dirname, 'app/utils')
         }
     },
